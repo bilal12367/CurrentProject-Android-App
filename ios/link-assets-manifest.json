@@ -1,0 +1,201 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Alegreya-Black.ttf",
+      "sha1": "01536cd02c585bb6267b5c318488e1d8f5430047"
+    },
+    {
+      "path": "assets/fonts/Alegreya-BlackItalic.ttf",
+      "sha1": "7be271719498276bf1f00b0df5ce126718952828"
+    },
+    {
+      "path": "assets/fonts/Alegreya-Bold.ttf",
+      "sha1": "0a38ea78df6eebc02d4c6cb7bac133f40bf697a5"
+    },
+    {
+      "path": "assets/fonts/Alegreya-BoldItalic.ttf",
+      "sha1": "9eba402b5d532b60b66b7e2c0057e940782d75a5"
+    },
+    {
+      "path": "assets/fonts/Alegreya-ExtraBold.ttf",
+      "sha1": "3ba923665f34858b0c70aed87d5e95b062b22d53"
+    },
+    {
+      "path": "assets/fonts/Alegreya-ExtraBoldItalic.ttf",
+      "sha1": "1e851784d55ba108be41ba92bf416be038c6fc2b"
+    },
+    {
+      "path": "assets/fonts/Alegreya-Italic.ttf",
+      "sha1": "e2728985e3e3ae5e3cd5284dc0417b7b0169b8e3"
+    },
+    {
+      "path": "assets/fonts/Alegreya-Medium.ttf",
+      "sha1": "aecf9522569ce79dce6d7e12910109903ae263e9"
+    },
+    {
+      "path": "assets/fonts/Alegreya-MediumItalic.ttf",
+      "sha1": "aaa985ef2a4b0776e320ca6f7461447c076febf9"
+    },
+    {
+      "path": "assets/fonts/Alegreya-Regular.ttf",
+      "sha1": "301bcee0334bb1e956c204e3f4603972d258aaae"
+    },
+    {
+      "path": "assets/fonts/Alegreya-SemiBold.ttf",
+      "sha1": "2d16480c40b04451910d896fe8cf780885581280"
+    },
+    {
+      "path": "assets/fonts/Alegreya-SemiBoldItalic.ttf",
+      "sha1": "92ffb6df2628e50db8c949f5a919bcef9980bf69"
+    },
+    {
+      "path": "assets/fonts/Nunito-Black.ttf",
+      "sha1": "6b41ef726f3dba8f3d8889c0f4c4b17832811642"
+    },
+    {
+      "path": "assets/fonts/Nunito-BlackItalic.ttf",
+      "sha1": "4912f710fef88cc3770612f053b7a452bc41668d"
+    },
+    {
+      "path": "assets/fonts/Nunito-Bold.ttf",
+      "sha1": "dea5eec0aca2aef62e3bfc625cf95f9d45b59687"
+    },
+    {
+      "path": "assets/fonts/Nunito-BoldItalic.ttf",
+      "sha1": "6d0327da2af845fdfa6a3cfeb5c123784d087753"
+    },
+    {
+      "path": "assets/fonts/Nunito-ExtraBold.ttf",
+      "sha1": "60821838f6675153f0699c6a86ad8467a937e0f5"
+    },
+    {
+      "path": "assets/fonts/Nunito-ExtraBoldItalic.ttf",
+      "sha1": "165391d62a4c86447db00b1c28278083aa2f1747"
+    },
+    {
+      "path": "assets/fonts/Nunito-ExtraLight.ttf",
+      "sha1": "5147803c00983715429e5f492938c8a3e6552839"
+    },
+    {
+      "path": "assets/fonts/Nunito-ExtraLightItalic.ttf",
+      "sha1": "25c78ceeff212006f7a7b449df2baabfeec1742b"
+    },
+    {
+      "path": "assets/fonts/Nunito-Italic-VariableFont_wght.ttf",
+      "sha1": "e1ffb7a3b1b490519cdcc9672a520ae2b2c128e9"
+    },
+    {
+      "path": "assets/fonts/Nunito-Italic.ttf",
+      "sha1": "c82dbd0b140a67ab9f201ef062d8377318098399"
+    },
+    {
+      "path": "assets/fonts/Nunito-Light.ttf",
+      "sha1": "7879b46e377513f6eb1c52f99000c8e96f36cf6e"
+    },
+    {
+      "path": "assets/fonts/Nunito-LightItalic.ttf",
+      "sha1": "b0e913e197ffad44911988e48b2452ee1ea64051"
+    },
+    {
+      "path": "assets/fonts/Nunito-Medium.ttf",
+      "sha1": "0e3a9789daa6603bf6870c124727c3643b56574a"
+    },
+    {
+      "path": "assets/fonts/Nunito-MediumItalic.ttf",
+      "sha1": "64e9688f18b3e12772d9c4707525f51057be7d3f"
+    },
+    {
+      "path": "assets/fonts/Nunito-Regular.ttf",
+      "sha1": "4b7236ba666cb77f00d8cb2a17696cc0dc2b2cc9"
+    },
+    {
+      "path": "assets/fonts/Nunito-SemiBold.ttf",
+      "sha1": "876165d70aa2e00f66737c7dd87039e2619bf2c2"
+    },
+    {
+      "path": "assets/fonts/Nunito-SemiBoldItalic.ttf",
+      "sha1": "7bd1aee703efa1423dc584f39658e113358561ac"
+    },
+    {
+      "path": "assets/fonts/Nunito-VariableFont_wght.ttf",
+      "sha1": "1f12fa4912fbe968c91818beb7b7b6399e97e87f"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "sha1": "a053c4d0f104ef0da25e89e154cbb208b2423f1c"
+    },
+    {
+      "path": "assets/fonts/Rajdhani-Bold.ttf",
+      "sha1": "d9c403532e310d0a470f959e65ed283a4f21d7a7"
+    },
+    {
+      "path": "assets/fonts/Rajdhani-Light.ttf",
+      "sha1": "8f180ecd327429e2e6996e3c6431e1c290437599"
+    },
+    {
+      "path": "assets/fonts/Rajdhani-Medium.ttf",
+      "sha1": "21724de5a45db366c69e88083bdd33a7ec3c05e6"
+    },
+    {
+      "path": "assets/fonts/Rajdhani-Regular.ttf",
+      "sha1": "73f086047e7ff11a3087cd481f133f9080a9d954"
+    },
+    {
+      "path": "assets/fonts/Rajdhani-SemiBold.ttf",
+      "sha1": "0fcd923c13976ebcc87b40237e3c5a053a347629"
+    },
+    {
+      "path": "assets/fonts/README.txt",
+      "sha1": "2ea040068bde79760868a1c93f17e296be693719"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-Black.ttf",
+      "sha1": "b1a1895600318ad730b7209984e4f352787321b3"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-Bold.ttf",
+      "sha1": "1de05d92173edf1cf44696d3c8a5842ebbf1e75f"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-BoldItalic.ttf",
+      "sha1": "c26e544aca7f0f4776d1c0fd7f111b26f020fdac"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-ExtraLight.ttf",
+      "sha1": "808273d2e7dd456c7709897e0fc4a2c5d72c4de8"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-ExtraLightItalic.ttf",
+      "sha1": "badc41bb05c461d365831f4a8c0e93cc3677f30a"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-Italic.ttf",
+      "sha1": "1babc993e83c4853bf1fe7e75694efdd5b3df1de"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-Light.ttf",
+      "sha1": "401ed0b1b7d9da4ee730467bcf4fcac8167f7993"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-LightItalic.ttf",
+      "sha1": "2daa91ace5be94d0493e0a6bf3ae132d83a095e4"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-Regular.ttf",
+      "sha1": "c1d91bd86751bd0a186ac0323dcf47de4d0c0981"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-SemiBold.ttf",
+      "sha1": "3ec2a03e4f87634460200b350ba7fdb8cc37934f"
+    },
+    {
+      "path": "assets/fonts/TitilliumWeb-SemiBoldItalic.ttf",
+      "sha1": "44ae5e1e566cf8917826fdbdbb7f18f0338bf15a"
+    },
+    {
+      "path": "assets/fonts/VarelaRound-Regular.ttf",
+      "sha1": "549e4b02217aff2920c11101eca6b41c805ccb69"
+    }
+  ]
+}
