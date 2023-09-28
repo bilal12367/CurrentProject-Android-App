@@ -20,6 +20,7 @@ import { IFile, Screens, addUniqueToArray } from '../utils'
 import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker'
 import FileUploadItem from '../components/FileUploadItem'
 import { useAppSelector } from '../store'
+import { HomeRoutes } from '../stacks/HomeStack'
 
 interface CreateOrganizationProp {
     navigation: NativeStackNavigationProp<{}>
@@ -95,7 +96,7 @@ const CreateOrganization = ({ navigation }: CreateOrganizationProp) => {
             setSelectedPics([])
             setSelectedLogo(undefined)
             setBannerPicsUploaded([])
-            navigation.navigate(Screens.DASHBOARD)
+            navigation.navigate(HomeRoutes.Dashboard)
         }
     }, [createOrgResp])
 

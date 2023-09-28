@@ -18,6 +18,10 @@ export interface IFile {
     type: string
 }
 
+export enum DiscordPageState {
+    Drawer, Chat, Details
+}
+
 export const loadFromAsyncStorage = async (dispatch: AppDispatch) => {
     const token = await AsyncStorage.getItem('token')
     if (token) {
@@ -85,4 +89,41 @@ export enum Screens {
     LOGO = 'LOGO',
     WELCOME = 'WELCOME',
     PROFILE = 'PROFILE'
+}
+
+export interface GetOrgResp {
+    _id: string
+    name: string
+    desc: string
+    leaders: User[]
+    groups: Group[]
+    admins: User[]
+    bannerPics: any[]
+    logo: string
+}
+
+
+export interface IMessage {
+  _id: string
+  groupId: string
+  message: string
+  files: any[]
+  from: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+
+export interface User {
+    _id: string
+    name: string
+    profilePic: string
+}
+
+export interface Group {
+    _id: string
+    groupName: string
+    state: string
+    participants: User[]
 }

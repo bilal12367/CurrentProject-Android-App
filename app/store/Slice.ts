@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IFile } from "../utils";
+import { DiscordPageState, IFile } from "../utils";
 import { apiOne } from "./RTKQuery";
 export enum LoadingState {
     loading = 'loading',
@@ -10,13 +10,19 @@ export enum LoadingState {
 interface State {
     var1: string,
     isLoggedIn: LoadingState,
-    filesHolder: string[]
+    filesHolder: string[],
+    orgList: string[],
+    isTabbarShown: Boolean,
+    discordPageState: DiscordPageState
 }
 
 const initialState: State = {
     isLoggedIn: LoadingState.loading,
     var1: '',
-    filesHolder: []
+    filesHolder: [],
+    orgList: [],
+    isTabbarShown: true,
+    discordPageState: DiscordPageState.Chat
 }
 
 export const slice1 = createSlice({
@@ -28,11 +34,20 @@ export const slice1 = createSlice({
         },
         setUserLogState(state, action: PayloadAction<LoadingState>) {
             state.isLoggedIn = action.payload;
+        },
+        setTabState(state, action: PayloadAction<Boolean>){
+            state.isTabbarShown = action.payload
+        },
+        setDiscordPageState(state, action: PayloadAction<DiscordPageState>){
+            state.discordPageState = action.payload
         }
     },
     extraReducers: (builder) => {
         builder.addMatcher(apiOne.endpoints.uploadFile2.matchFulfilled, (state, action: any) => {
             // state.filesHolder.push(action.payload.data._id)
+        }).addMatcher(apiOne.endpoints.getOrgList.matchFulfilled, (state, action: any) => {
+            // console.log('payload:',action.payload)
+            state.orgList = action.payload.orgs.map((org: any) => org._id)
         })
     }
 })

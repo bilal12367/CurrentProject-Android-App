@@ -17,11 +17,10 @@ import { AppRoutes } from '../router/AppRouter'
 import { Screens } from '../utils'
 import { HomeRoutes } from '../stacks/HomeStack'
 
-const Profile = () => {
+const Profile = (navigation) => {
     const [uploadFileReq, uploadFileRes] = useUploadFileMutation();
     const [getProfileReq, getProfileResp] = useGetProfilePicMutation({});
     const [getMyDetailsReq, getMyDetailsResp] = useGetMyDetailsMutation();
-    const navigation = useNavigation()
     const dispatch = useAppDispatch();
 
     useEffect(() => {

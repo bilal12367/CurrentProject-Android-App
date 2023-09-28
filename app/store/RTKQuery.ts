@@ -163,14 +163,29 @@ export const apiOne = createApi({
                 return '/api/v1/getOrgList'
             }
         }),
-        getImage: builder.mutation({
+        getImage: builder.query({
+            query: (payload) => {
+                return '/api/v1/getImage?fileId=' + payload
+            }
+        }),
+        getOrgDetails: builder.query({
+            query: (payload) => {
+                return '/api/v1/getOrgDetails?orgId=' + payload
+            }
+        }),
+        getMessages: builder.query({
+            query: (payload) => {
+                return '/api/v1/getMessages?groupId=' + payload
+            }
+        }),
+        sendMessage: builder.mutation({
             query: (payload) => ({
-                url: '/api/v1/getImage',
+                url: '/api/v1/sendMessage',
                 body: payload,
                 method: 'POST'
             })
         })
-    })
+    }),
 })
 
-export const { useGetImageMutation, useGetOrgListQuery, useUploadFile2Mutation, useCreateOrgMutation, useGetMyDetailsMutation, useGetProfilePicMutation, useGetAllUsersMutation, useTestMutation, useRegisterMutation, useLoginMutation, useUploadFileMutation } = apiOne
+export const { useSendMessageMutation, useGetMessagesQuery, useLazyGetMessagesQuery, useLazyGetOrgDetailsQuery, useGetOrgDetailsQuery, useGetImageQuery, useGetOrgListQuery, useUploadFile2Mutation, useCreateOrgMutation, useGetMyDetailsMutation, useGetProfilePicMutation, useGetAllUsersMutation, useTestMutation, useRegisterMutation, useLoginMutation, useUploadFileMutation } = apiOne

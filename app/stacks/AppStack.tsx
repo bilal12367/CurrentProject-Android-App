@@ -11,14 +11,13 @@ import Profile from '../screens/Profile';
 import Test from '../screens/Test';
 import HomeStack from './HomeStack';
 import DashboardScreen2 from '../screens/DashboardScreen2';
+import Chat from '../screens/Chat';
 
-const Test1 = () => {
-    const Stack = createNativeStackNavigator();
-    return (
-        <Stack.Navigator >
-            <Stack.Screen name='test' component={Test} />
-        </Stack.Navigator>
-    )
+
+
+export const DrawerRoutes = {
+    Home: 'Home',
+    Chat: 'Chat'
 }
 
 const AppStack = () => {
@@ -33,10 +32,10 @@ const AppStack = () => {
             <Drawer.Screen name={Screens.CREATEORG} component={CreateOrganization} />
             <Drawer.Screen name={Screens.PROFILE} component={Profile} options={{ swipeEnabled: false, headerShown: false }} /> */
             }
-            <Drawer.Screen name={'Home'} component={HomeStack} />
+            <Drawer.Screen name={DrawerRoutes.Home} component={HomeStack} />
+            <Drawer.Screen name={DrawerRoutes.Chat} component={Chat} options={{swipeEnabled: false}} />
             {/* <Drawer.Group>
                 <Drawer.Screen name={Screens.DASHBOARD} component={DashboardScreen2} />
-                <Drawer.Screen name={Screens.CREATEORG} component={CreateOrganization} />
                 <Drawer.Screen name={Screens.PROFILE} component={Profile} options={{ swipeEnabled: false, headerShown: false }} />
 
             </Drawer.Group> */}

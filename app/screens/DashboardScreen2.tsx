@@ -12,6 +12,9 @@ import ImageItem from '../components/ImageItem'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useFocusEffect } from '@react-navigation/native'
 import { HomeRoutes } from '../stacks/HomeStack'
+import { DrawerRoutes } from '../stacks/AppStack'
+import { Icon } from '@rneui/base'
+import { ChatRoutes } from './Chat'
 
 const DashboardScreen2 = ({ navigation }) => {
     const win = Dimensions.get('window')
@@ -34,7 +37,6 @@ const DashboardScreen2 = ({ navigation }) => {
         hamburgerStyle: { padding: 8, borderRadius: 100, overflow: 'hidden' },
         hamburgerImage: { height: 30, width: 30 }
     })
-
     useFocusEffect(
         React.useCallback(() => {
             orgList.refetch();
@@ -78,7 +80,9 @@ const DashboardScreen2 = ({ navigation }) => {
 
             <View style={{ marginTop: 20, width: '100%', display: 'flex', flexDirection: 'row' }}>
                 <ScrollView horizontal={true} style={{ width: '100%', display: 'flex', flex: 1, flexWrap: 'wrap' }}>
-
+                    <Pressable onPress={() => { navigation.navigate(HomeRoutes.CreateOrg) }} android_ripple={{ color: 'rgba(0,0,0,0.2)', foreground: true }} style={{ marginLeft: 20, backgroundColor: 'white', borderWidth: 1, borderStyle: 'dashed', borderColor: 'grey', padding: 14, elevation: 10, marginVertical: 14 }}>
+                        <Icon name='add' color={'grey'} />
+                    </Pressable>
                     {orgList.isSuccess &&
                         Object.values(orgList.data.orgs).map((org: any, index) => {
                             return (
@@ -87,7 +91,7 @@ const DashboardScreen2 = ({ navigation }) => {
                                     <Pressable
                                         key={org._id}
                                         android_ripple={{ foreground: true, color: 'rgba(0,0,0,0.2)' }}
-                                        onPress={() => { navigation.navigate(HomeRoutes.Chat, { orgId: org._id }) }}
+                                        onPress={() => { navigation.navigate(DrawerRoutes.Chat, { screen: ChatRoutes.ChatHome.name, params: { orgId: org._id } }) }}
                                         style={{ borderRadius: 8, overflow: 'hidden', elevation: 8, marginVertical: 10, marginLeft: index == 0 ? 20 : 14, marginRight: index == orgList.data.orgs.length - 1 ? 10 : 0 }}>
                                         <View style={{ height: 60, width: 60 }}>
                                             <ImageItem fileId={org.logo} />
