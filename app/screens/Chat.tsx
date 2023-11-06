@@ -63,7 +63,6 @@ const Chat = () => {
     <View style={{ height: '100%', width: '100%' }}>
 
       <Tab.Navigator tabBar={(props: BottomTabBarProps) => {
-
         const onTabPress = (route: any, isFocused: boolean) => {
           const event = props.navigation.emit({
             type: 'tabPress',
@@ -78,7 +77,7 @@ const Chat = () => {
           {
             Object.values(props.state.routeNames).map((route: string, index: number) => {
               return (
-                <PressableComponent onClick={() => {
+                <PressableComponent key={route} onClick={() => {
                   onTabPress(route, props.state.index == index)
                 }} foreground={true} style={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 8 }}>
                   <Icon size={24} color={props.state.index == index ? Colors.pallette3.primary : 'grey'} name={props.state.index == index ? ChatRoutes[route].activeIcon : ChatRoutes[route].inActiveIcon} />

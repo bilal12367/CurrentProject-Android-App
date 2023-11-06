@@ -88,7 +88,6 @@ const CreateOrganization = ({ navigation }: CreateOrganizationProp) => {
     }, [getUsersResp, bannerPicsUploaded])
 
     useEffect(() => {
-        console.log('createOrgResp', createOrgResp.data)
         if (createOrgResp.isSuccess) {
             // Show Success Modal
             setOrgInfo({ name: '', desc: '' })
@@ -121,7 +120,6 @@ const CreateOrganization = ({ navigation }: CreateOrganizationProp) => {
 
     const addGroup = () => {
         // groupList.push()
-        // console.log('update list: ', [...groupList, { color: Colors.pallette3.primaryLight, label: groupName, onClose: true }])
         setGroupList([{ color: Colors.pallette3.primaryLight, label: groupName, onClose: true }, ...groupList])
         setGroupName('')
     }
@@ -136,7 +134,7 @@ const CreateOrganization = ({ navigation }: CreateOrganizationProp) => {
             groups.push(group.label)
         }
         if (selectedPics.length == bannerPicsUploaded.length) {
-            createOrgReq({ name: orgInfo.name, desc: orgInfo.desc, admins: selectedAdmins, groups: groups, files: files, logo: logoUploaded })
+            createOrgReq({ name: orgInfo.name, desc: orgInfo.desc, admins: selectedAdmins, groups: groups, files: bannerPicsUploaded, logo: logoUploaded })
         }
     }
 

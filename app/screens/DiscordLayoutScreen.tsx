@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Dimensions, Pressable, ScrollView } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Animated, { Easing, Extrapolation, interpolate, interpolateColor, runOnJS, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { GestureHandlerRootView, PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler'
@@ -72,30 +72,26 @@ class DiscordLayoutAnimation {
       },
       onActive: (event, context: any) => {
         // if (holderX.value > 20 && holderX.value < ((deviceWidth * 8) / 10)) {
-        // console.log(holderX.value , chatX.value, event.translationX)
-        // console.log({ chatX: this.chatX.value, holderX: this.holderX.value, event: event.translationX })
         if ((this1.holderX.value == 0 || this1.holderX.value < this1.end) && this1.chatX.value == 0 && event.translationX > 0) {
-          console.log('called1')
+
           this1.holderX.value = event.translationX + context.translateX
         } else if (this1.chatX.value == 0 && this1.holderX.value > 0 && (this1.holderX.value < this1.end || event.translationX < 0)) {
-          console.log('called2')
+
           this1.holderX.value = event.translationX + context.translateX
         } else if (this1.holderX.value == 0 && this1.chatX.value >= 0 && event.translationX < 0) {
-          console.log('called3')
+
           this1.chatX.value = event.translationX + context.translateX
         } else if (this1.holderX.value == 0 && this1.chatX.value < 0 && (this1.chatX.value > (-this1.end) || event.translationX > 0)) {
-          console.log('called4')
+
           this1.chatX.value = event.translationX + context.translateX
         }
         // if (holderX.value >= 0 && holderX.value <= end && chatX.value == 0) {
-        //   console.log('called1')
         //   if(holderX.value != end && event.translationX < 0) {
 
         //   } else {
         //     holderX.value = event.translationX + context.translateX
         //   }
         // } else if (holderX.value == 0 && (chatX.value > 0 || chatX.value > (-end))) {
-        //   console.log('called2')
         //   holderX.value = 0
         //   chatX.value = event.translationX + context.translateX
         // }
@@ -156,8 +152,11 @@ class DiscordLayoutAnimation {
 }
 
 const DiscordLayoutScreen = (navigation) => {
-  const discordAnim = new DiscordLayoutAnimation()
-  const { orgId } = navigation.route.params
+  // const discordAnim = new DiscordLayoutAnimation()
+  let orgId : string;
+  if (navigation.route.params?.orgId) {
+    orgId = navigation.route.params?.orgId
+  }
   const isFocused = useIsFocused();
   const [orgReq, orgResp, lastInfo] = useLazyGetOrgDetailsQuery({ refetchOnFocus: true })
   const deviceWidth = Dimensions.get('screen').width
@@ -171,6 +170,7 @@ const DiscordLayoutScreen = (navigation) => {
   const [selectedGroup, setSelectedGroup] = useState<Group | undefined>()
   const dispatch = useAppDispatch();
   const pageState = useAppSelector((state) => state.reducer.discordPageState)
+  const orgsList = useAppSelector((state) => state.reducer.orgList)
 
   const silverAppBarY = useSharedValue(0)
 
@@ -180,12 +180,15 @@ const DiscordLayoutScreen = (navigation) => {
       if (orgResp.data.groups.length > 0) {
         setSelectedGroup(orgResp.data.groups[0])
       }
-      // console.log('triggered', orgResp.data.logo)
     }
-    if (orgResp.isUninitialized) {
+    if (orgResp.isUninitialized && (orgId != "" && orgId != undefined)) {
       orgReq(orgId)
     }
+    if(orgId == undefined && orgsList.length != 0 && orgResp.isUninitialized) {
+      orgReq(orgsList[0])
+    }
   }, [orgResp])
+
 
 
   useEffect(() => {
@@ -285,14 +288,12 @@ const DiscordLayoutScreen = (navigation) => {
         chatX.value = 0
       }
       // if (holderX.value >= 0 && holderX.value <= end && chatX.value == 0) {
-      //   console.log('called1')
       //   if(holderX.value != end && event.translationX < 0) {
 
       //   } else {
       //     holderX.value = event.translationX + context.translateX
       //   }
       // } else if (holderX.value == 0 && (chatX.value > 0 || chatX.value > (-end))) {
-      //   console.log('called2')
       //   holderX.value = 0
       //   chatX.value = event.translationX + context.translateX
       // }
@@ -306,7 +307,7 @@ const DiscordLayoutScreen = (navigation) => {
           closeDrawer()
         }
       } else if (chatX.value == 0 && holderX.value <= end && event.translationX < 0) {
-        if(event.velocityX < -1000) {
+        if (event.velocityX < -1000) {
           closeDrawer()
         } else {
           openDrawer()
@@ -351,7 +352,6 @@ const DiscordLayoutScreen = (navigation) => {
     const opacityInterpolate = interpolate(silverAppBarY.value, [0, headerHeight], [1, 0], {
       extrapolateRight: Extrapolation.CLAMP
     })
-    console.log({ opacityInterpolate, silverAppBarY: silverAppBarY.value, headerHeight })
     return ({
       opacity: opacityInterpolate,
       // transform: [
@@ -403,7 +403,7 @@ const DiscordLayoutScreen = (navigation) => {
                     {
                       orgList.isSuccess &&
                       Object.values(orgList.data.orgs).map((org: any) => {
-                        return <View style={{ height: 50, width: 50, borderRadius: 4, overflow: 'hidden' }}>
+                        return <View key={org._id} style={{ height: 50, width: 50, borderRadius: 4, overflow: 'hidden' }}>
                           <Pressable onPress={() => {
                             orgReq(org._id)
                           }} android_ripple={{ foreground: true, color: 'rgba(0,0,0,0.3)' }}>
@@ -431,16 +431,13 @@ const DiscordLayoutScreen = (navigation) => {
                           <Animated.ScrollView
                             style={[{ marginTop: headerHeight + 20, backgroundColor: 'white', flexGrow: 1 }, silverContainer]}
                             onScroll={(e) => {
-                              console.log('silverAppBarY.value', silverAppBarY.value)
-                              console.log(Dimensions.get('window').height * 2 / 10)
                               silverAppBarY.value = e.nativeEvent.contentOffset.y
 
                             }}>
                             {
                               Object.values(selectedOrg.groups).map((group: any) => {
                                 return (
-
-                                  <View style={{ paddingHorizontal: 6, marginTop: 5 }}>
+                                  <View key={group._id} style={{ paddingHorizontal: 6, marginTop: 5 }}>
                                     <PressableComponent
                                       style={{ display: 'flex', borderRadius: 6, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', padding: 5, paddingHorizontal: 8 }}
                                       foreground={true}

@@ -16,6 +16,7 @@ import { Screens, loadFromAsyncStorage } from '../utils'
 import WelcomeScreen from '../screens/WelcomeScreen'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import StatusBarComponent from '../components/StatusBarComponent'
+import HomeStack from '../stacks/HomeStack'
 
 const Loader = () => {
     return <View style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
@@ -49,7 +50,6 @@ const AppRouter = () => {
             }
         } catch (error) {
             dispatch(actions.slice1.setUserLogState(LoadingState.false))
-            console.log('error', error)
             // ToastAndroid.showWithGravity('Cannot Access Credentials!!', 2000, ToastAndroid.LONG)
         }
     }
@@ -72,7 +72,7 @@ const AppRouter = () => {
                 {/* <SwitchNavigator /> */}
                 {
                     isLoggedIn == LoadingState.true ?
-                        <Stack.Screen name={AppRoutes.AppStack} component={AppStack} /> :
+                        <Stack.Screen name={AppRoutes.AppStack} component={HomeStack} /> :
                         <Stack.Screen name={AppRoutes.AuthStack} component={AuthStack} />
                 }
                 {

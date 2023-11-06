@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DiscordPageState, IFile } from "../utils";
+import { DiscordPageState, IFile, IMessage } from "../utils";
 import { apiOne } from "./RTKQuery";
 export enum LoadingState {
     loading = 'loading',
@@ -16,6 +16,12 @@ interface State {
     discordPageState: DiscordPageState
 }
 
+interface DataState {
+    messages: IMessage[],
+    selectedOrg: any,
+    selectedGroup: any
+}
+
 const initialState: State = {
     isLoggedIn: LoadingState.loading,
     var1: '',
@@ -23,6 +29,12 @@ const initialState: State = {
     orgList: [],
     isTabbarShown: true,
     discordPageState: DiscordPageState.Chat
+}
+
+const dataInitialState: DataState = {
+    messages: [],
+    selectedOrg: undefined,
+    selectedGroup: undefined
 }
 
 export const slice1 = createSlice({
@@ -35,10 +47,10 @@ export const slice1 = createSlice({
         setUserLogState(state, action: PayloadAction<LoadingState>) {
             state.isLoggedIn = action.payload;
         },
-        setTabState(state, action: PayloadAction<Boolean>){
+        setTabState(state, action: PayloadAction<Boolean>) {
             state.isTabbarShown = action.payload
         },
-        setDiscordPageState(state, action: PayloadAction<DiscordPageState>){
+        setDiscordPageState(state, action: PayloadAction<DiscordPageState>) {
             state.discordPageState = action.payload
         }
     },
@@ -48,6 +60,26 @@ export const slice1 = createSlice({
         }).addMatcher(apiOne.endpoints.getOrgList.matchFulfilled, (state, action: any) => {
             // console.log('payload:',action.payload)
             state.orgList = action.payload.orgs.map((org: any) => org._id)
+        })
+    }
+})
+
+export const dataSlice = createSlice({
+    name: 'DataSlice',
+    initialState: dataInitialState,
+    reducers: {
+        setMessageList(state, action: PayloadAction<IMessage[]>) {
+            state.messages = action.payload
+        },
+        addNewMessage(state, action: PayloadAction<IMessage>) {
+            state.messages.push(action.payload)
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(apiOne.endpoints.getMessages.matchFulfilled, (state, action: any) => {
+            state.messages = action.payload
+        }).addMatcher(apiOne.endpoints.sendMessage.matchFulfilled,(state,action: any) => {
+            state.messages.push(action.payload)
         })
     }
 })

@@ -45,7 +45,6 @@ const DashboardScreen2 = ({ navigation }) => {
 
     useEffect(() => {
         if (orgList.isSuccess) {
-            console.log('orgList', orgList.data.orgs)
         }
     }, [orgList])
 
@@ -86,7 +85,7 @@ const DashboardScreen2 = ({ navigation }) => {
                     {orgList.isSuccess &&
                         Object.values(orgList.data.orgs).map((org: any, index) => {
                             return (
-                                <View>
+                                <View key={org._id}>
                                     <Badge style={{ position: 'absolute', right: 0, top: 0, zIndex: 3 }}>3</Badge>
                                     <Pressable
                                         key={org._id}

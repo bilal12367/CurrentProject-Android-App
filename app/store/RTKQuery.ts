@@ -33,7 +33,6 @@ export const apiOne = createApi({
             if (!headers.has("Content-Type")) {
                 headers.set('Content-Type', 'application/json')
             }
-            // console.log('headers', headers)
             return headers;
         },
         responseHandler: (response: Response) => {
@@ -43,7 +42,6 @@ export const apiOne = createApi({
                 try {
                     KeyChain.setGenericPassword('token', cookie)
                 } catch (error) {
-                    console.log("Error Storing Cred!!")
                 }
             }
             return response.json()
@@ -101,8 +99,6 @@ export const apiOne = createApi({
         uploadFile2: builder.mutation({
             queryFn: async ({ url, data, setProgress }) => {
                 try {
-                    console.log("URL: ", url)
-                    console.log("Data: ", data)
                     let formData = new FormData();
                     formData.append('files[]', data)
                     let headers: any = {}
@@ -137,6 +133,15 @@ export const apiOne = createApi({
                     body: payload,
                     method: 'POST',
                     credentials: 'include'
+                }
+            }
+        }),
+        getProfileImage: builder.query({
+            query: (payload) => {
+                if (payload == "") {
+                    return  '/api/v1/getProfileImage'
+                } else {
+                    return '/api/v1/getProfileImage?userId=' + payload
                 }
             }
         }),
@@ -184,8 +189,25 @@ export const apiOne = createApi({
                 body: payload,
                 method: 'POST'
             })
+        }),
+        getAllOrgs: builder.query({
+            query: (payload) => {
+                return '/api/v1/getAllOrgs'
+            }
+        }),
+        addRequestToJoinOrg: builder.mutation({
+            query: (payload) => ({
+                url: '/api/v1/addRequestToJoinOrg',
+                body: payload,
+                method: 'POST'
+            })
+        }),
+        getRequestDetails: builder.query({
+            query: (payload) => {
+                return '/api/v1/getRequestDetails?requestId='+payload
+            }
         })
     }),
 })
 
-export const { useSendMessageMutation, useGetMessagesQuery, useLazyGetMessagesQuery, useLazyGetOrgDetailsQuery, useGetOrgDetailsQuery, useGetImageQuery, useGetOrgListQuery, useUploadFile2Mutation, useCreateOrgMutation, useGetMyDetailsMutation, useGetProfilePicMutation, useGetAllUsersMutation, useTestMutation, useRegisterMutation, useLoginMutation, useUploadFileMutation } = apiOne
+export const { useLazyGetRequestDetailsQuery, useAddRequestToJoinOrgMutation, useLazyGetAllOrgsQuery, useGetAllOrgsQuery, useGetProfileImageQuery, useSendMessageMutation, useGetMessagesQuery, useLazyGetMessagesQuery, useLazyGetOrgDetailsQuery, useGetOrgDetailsQuery, useGetImageQuery, useGetOrgListQuery, useUploadFile2Mutation, useCreateOrgMutation, useGetMyDetailsMutation, useGetProfilePicMutation, useGetAllUsersMutation, useTestMutation, useRegisterMutation, useLoginMutation, useUploadFileMutation } = apiOne

@@ -11,6 +11,12 @@ export interface Message {
     updatedAt: string
 }
 
+export interface ICouncilMember {
+    _id: string
+    name: string
+    profilePic: string
+}
+
 export interface IFile {
     name: string,
     uri: string,
@@ -104,14 +110,14 @@ export interface GetOrgResp {
 
 
 export interface IMessage {
-  _id: string
-  groupId: string
-  message: string
-  files: any[]
-  from: string
-  createdAt: string
-  updatedAt: string
-  __v: number
+    _id: string
+    groupId: string
+    message: string
+    files: any[]
+    from: string
+    createdAt: string
+    updatedAt: string
+    __v: number
 }
 
 

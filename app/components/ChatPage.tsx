@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useGetMessagesQuery, useLazyGetMessagesQuery, useSendMessageMutation } from '../store/RTKQuery'
 import { DiscordPageState, Group, IMessage } from '../utils'
 import { actions, useAppDispatch, useAppSelector } from '../store'
@@ -9,6 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '../constants/styles'
 import PressableComponent from './PressableComponent'
 import { MutationTypes } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
+import ImageItem from './ImageItem'
+import ChatMessageItem from './ChatMessageItem'
 
 
 interface ChatPageProps {
@@ -21,30 +23,63 @@ interface ChatPageProps {
     }
 }
 
+interface MessageView {
+    from: String,
+    messages: IMessage[]
+}
+
 const ChatPage = (props: ChatPageProps) => {
-    const [msgReq, msgResp, lastmsgResp] = useLazyGetMessagesQuery()
-    const [messageList, setMessageList] = useState<IMessage[]>([]);
+    const scrollRef = useRef()
+    const msgResp = useGetMessagesQuery(props.group._id)
+    const messageList = useAppSelector((state) => state.dataReducer.messages)
+    const [messageViewList, setMessageViewList] = useState<MessageView[]>([]);
     const [sendMessageReq, sendMessageResp] = useSendMessageMutation()
     const pageState = useAppSelector((state) => state.reducer.discordPageState)
     const [message, setMessage] = useState<string>('');
-    useMemo(() => {
-        if (lastmsgResp.lastArg != props.group._id) {
-            console.log("Re-Rendered")
-            msgReq(props.group._id, false)
-        }
-    }, [props])
+
     useEffect(() => {
-        if (msgResp.isSuccess) {
-            // console.log('msgResp.data', msgResp.data)
-            setMessageList(msgResp.data)
+        if (messageList.length != 0) {
+            let temp = messageList[0].from
+            let arr: MessageView[] = []
+            let obj: any = {
+                from: temp,
+                messages: []
+            }
+            messageList.forEach((message: IMessage, index: Number) => {
+                if (temp == message.from) {
+                    obj.from = message.from
+                    obj.messages.push(message)
+                } else {
+                    arr.push(obj)
+                    temp = message.from
+                    obj = {
+                        from: message.from,
+                        messages: [message]
+                    }
+                }
+                if (index == messageList.length - 1) {
+                    arr.push(obj)
+                }
+            })
+            setMessageViewList(arr);
+        } else {
+            setMessageViewList([])
         }
-        if (sendMessageResp.isSuccess) {
-            let newMessage = sendMessageResp.data as IMessage
-            setMessageList([newMessage, ...messageList])
-        }
-    }, [msgResp, sendMessageResp, props])
+    }, [messageList])
 
+    useEffect(() => {
+        msgResp.refetch()
+        // if (msgResp.isUninitialized) {
+        //     msgReq(props.group._id)
+        // }
+    }, [ props])
 
+    const logMessages = (messages: IMessage[]) => {
+        let temp: String[] = []
+        messages.forEach((message: IMessage) => {
+            temp.push(message.message)
+        })
+    }
 
     const styles = StyleSheet.create({
         header: {}
@@ -67,19 +102,45 @@ const ChatPage = (props: ChatPageProps) => {
                     </View>
                 </SafeAreaView>
             </View>
-            <ScrollView bounces={true} style={{ flexGrow: 1, display: 'flex' }}>
+            <ScrollView onContentSizeChange={() => {
+                scrollRef.current.scrollToEnd({ animated: true })
+            }} ref={scrollRef as any} bounces={true} style={{ flexGrow: 1, display: 'flex', margin: 8 }}>
                 {
                     msgResp.isSuccess &&
+                    Object.values(messageViewList).map((item: MessageView, index: number) => {
+                        return <ChatMessageItem key={item.messages[0]._id} messages={item.messages} userId={item.from} />
+                    })
+                }
+                {/* {
+                    msgResp.isSuccess &&
                     Object.values(messageList).map((message: IMessage, index: number) => {
+                        let showProfile = true
+                        if (index != 0) {
+                            if (message.from == messageList[index - 1].from) {
+                                showProfile = false
+                            } else {
+                                showProfile = true
+                            }
+                        } else {
+                            showProfile = true
+                        }
                         return (
                             <>
-                                <View key={message._id} style={{ padding: 14, marginBottom: messageList.length - 1 == index? 10: 0 , elevation: 6, borderRadius: 14, backgroundColor: 'white', marginTop: 14, marginHorizontal: 14 }}>
+                                <View key={message._id} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: messageList.length - 1 == index ? 10 : 0, borderRadius: 14 }}>
+                                    <View style={{ width: 50 }}>
+                                        <View>
+                                            {
+                                                showProfile &&
+                                                <ProfileAvatar size={35} userName='' userId={message.from} />
+                                            }
+                                        </View>
+                                    </View>
                                     <Text>{message.message}</Text>
                                 </View>
                             </>
                         )
                     })
-                }
+                } */}
             </ScrollView>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', elevation: 2, paddingVertical: 14, paddingHorizontal: 8, borderTopColor: '#ebebeb' }}>
                 <TextInput onChangeText={(newText: string) => { setMessage(newText) }} value={message} style={{ backgroundColor: '#ebebeb', flexGrow: 1, paddingHorizontal: 14, marginHorizontal: 3, borderColor: '#d4d4d4', borderWidth: 2, borderRadius: 100 }} multiline={true} />

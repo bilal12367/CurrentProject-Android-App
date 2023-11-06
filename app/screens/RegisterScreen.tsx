@@ -44,7 +44,6 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
         })
         setFormErrors({ ...formErrors, ...state })
       } else {
-        // console.log(registerResp.error.data)
       }
     }
     if (registerResp.isSuccess) {

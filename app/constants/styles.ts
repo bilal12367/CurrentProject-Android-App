@@ -33,6 +33,9 @@ export const fonts = {
     nunitoRegular: {
         fontFamily: 'Nunito-Regular'
     },
+    alegreyaRegular: {
+        fontFamily: 'Alegreya-Regular'
+    },
     head1: {
         fontFamily: 'Nunito-ExtraBold', fontSize: 34, color: 'black'
     },
@@ -42,6 +45,9 @@ export const fonts = {
     head3: {
         fontFamily: 'Nunito-ExtraBold', fontSize: 14, color: 'black'
     },
+    body1: {
+        fontFamily: 'Nunito-Regular', fontSize: 15, color: 'black'
+    }
 }
 
 export const Colors = {
@@ -84,6 +90,7 @@ export const Colors = {
         secondary: '#9DA7FF',
         third: '#FF869C',
         light1: '#E1E2E5',
+        highlightLight1: '#B7B7B7',
         light2: '#E8ECF4',
         imp: '#E7CE8C',
         primaryTint1: '#c2c9fc',

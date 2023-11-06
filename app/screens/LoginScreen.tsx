@@ -45,8 +45,6 @@ const LoginScreen = ({ navigation }: WelcomeScreenProp) => {
             dispatch(actions.slice1.setUserLogState(LoadingState.true))
         } else if (loginResp.isError) {
             const error: ErrorType = loginResp.error.data as any
-            console.log('loginResp.error', loginResp.error)
-            console.log('error', error)
             if (error.name == GeneralErrorTypes.ParametersMissing.name) {
                 const formErrorState = formErrors
                 if (formValue.email == '') {

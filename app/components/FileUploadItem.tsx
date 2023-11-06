@@ -20,7 +20,6 @@ const FileUploadItem = ({ file, uploadCallback = () => { } }: FileUploadItemProp
             uploadFileReq({ url: '/uploadFile', data: file, setProgress })
         }
         if (uploadFileResp.isSuccess) {
-            console.log("Resp Upload", uploadFileResp.data)
             uploadCallback(uploadFileResp.data.data)
         }
     }, [uploadFileResp])
