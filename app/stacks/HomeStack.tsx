@@ -9,6 +9,7 @@ import AppStack from './AppStack'
 import Chat from '../screens/Chat'
 import OrganizationDetails from '../screens/OrganizationDetails'
 import RequestChat from '../screens/RequestChat'
+import { SocketProvider } from '../context/SocketContext'
 
 export const HomeRoutes = {
     Dashboard: 'Dashboard',
@@ -22,14 +23,16 @@ export const HomeRoutes = {
 const HomeStack = () => {
     const Stack = createStackNavigator()
     return (
-        <Stack.Navigator initialRouteName={HomeRoutes.Dashboard} screenOptions={{ headerShown: false }}>
-            <Stack.Screen name={HomeRoutes.Dashboard} component={AppStack} />
-            <Stack.Screen name={HomeRoutes.CreateOrg} component={CreateOrganization} />
-            <Stack.Screen name={HomeRoutes.OrgDetails} component={OrganizationDetails} />
-            <Stack.Screen name={HomeRoutes.Chat} component={Chat} />
-            <Stack.Screen name={HomeRoutes.Profile} component={Profile} />
-            <Stack.Screen name={HomeRoutes.RequestChat} component={RequestChat} />
-        </Stack.Navigator>
+        <SocketProvider>
+            <Stack.Navigator initialRouteName={HomeRoutes.Dashboard} screenOptions={{ headerShown: false }}>
+                <Stack.Screen name={HomeRoutes.Dashboard} component={AppStack} />
+                <Stack.Screen name={HomeRoutes.CreateOrg} component={CreateOrganization} />
+                <Stack.Screen name={HomeRoutes.OrgDetails} component={OrganizationDetails} />
+                <Stack.Screen name={HomeRoutes.Chat} component={Chat} />
+                <Stack.Screen name={HomeRoutes.Profile} component={Profile} />
+                <Stack.Screen name={HomeRoutes.RequestChat} component={RequestChat} />
+            </Stack.Navigator>
+        </SocketProvider>
     )
 }
 

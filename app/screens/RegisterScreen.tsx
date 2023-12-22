@@ -32,19 +32,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
 
   useEffect(() => {
     if (registerResp.isError) {
-      if (registerResp.error.data.name == 'ValidationError') {
-        let errors: { name: string, message: string }[] = registerResp.error.data.errors
-        let state: any = {
-          name: '',
-          email: '',
-          password: ''
-        }
-        errors.forEach((error) => {
-          state[error.name] = error.message
-        })
-        setFormErrors({ ...formErrors, ...state })
-      } else {
-      }
+      setFormErrors({...formErrors, password: "Invalid Email or Password."})
     }
     if (registerResp.isSuccess) {
       // navigation.replace(Screens.HOME)

@@ -6,6 +6,8 @@ export interface Message {
     _id: string,
     from: string,
     message: string,
+    groupId?: string,
+    requestId?: string,
     createdAt: string,
     to: string,
     updatedAt: string
@@ -23,6 +25,29 @@ export interface IFile {
     size: number,
     type: string
 }
+
+export type INotification = {
+    __v: number
+    _id: string
+    createdAt: string
+    org_id: {
+      _id: string
+      desc: string
+      logo: string
+      name: string
+    }
+    request_state: string
+    request_type: string
+    requested_to_user: string
+    requested_user_id: {
+      _id: string
+      name: string,
+      profilePic?: string
+    }
+    role_of_requested_user: string
+    updatedAt: string
+  }
+  
 
 export enum DiscordPageState {
     Drawer, Chat, Details

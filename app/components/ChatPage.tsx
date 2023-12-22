@@ -11,6 +11,7 @@ import PressableComponent from './PressableComponent'
 import { MutationTypes } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import ImageItem from './ImageItem'
 import ChatMessageItem from './ChatMessageItem'
+import { useRoomHook } from '../hooks/useRoomHook'
 
 
 interface ChatPageProps {
@@ -30,22 +31,23 @@ interface MessageView {
 
 const ChatPage = (props: ChatPageProps) => {
     const scrollRef = useRef()
-    const msgResp = useGetMessagesQuery(props.group._id)
-    const messageList = useAppSelector((state) => state.dataReducer.messages)
+    // const msgResp = useGetMessagesQuery(props.group._id)
+    // const messageList = useAppSelector((state) => state.dataReducer.messages)
+    const roomProvider = useRoomHook({ roomId: props.group._id })
     const [messageViewList, setMessageViewList] = useState<MessageView[]>([]);
     const [sendMessageReq, sendMessageResp] = useSendMessageMutation()
-    const pageState = useAppSelector((state) => state.reducer.discordPageState)
     const [message, setMessage] = useState<string>('');
+    const pageState = useAppSelector((state) => state.reducer.discordPageState)
 
     useEffect(() => {
-        if (messageList.length != 0) {
-            let temp = messageList[0].from
+        if (roomProvider.messageList.length != 0) {
+            let temp = roomProvider.messageList[0].from
             let arr: MessageView[] = []
             let obj: any = {
                 from: temp,
                 messages: []
             }
-            messageList.forEach((message: IMessage, index: Number) => {
+            roomProvider.messageList.forEach((message: IMessage, index: Number) => {
                 if (temp == message.from) {
                     obj.from = message.from
                     obj.messages.push(message)
@@ -57,7 +59,7 @@ const ChatPage = (props: ChatPageProps) => {
                         messages: [message]
                     }
                 }
-                if (index == messageList.length - 1) {
+                if (index == roomProvider.messageList.length - 1) {
                     arr.push(obj)
                 }
             })
@@ -65,14 +67,21 @@ const ChatPage = (props: ChatPageProps) => {
         } else {
             setMessageViewList([])
         }
-    }, [messageList])
+    }, [roomProvider.messageList])
 
     useEffect(() => {
-        msgResp.refetch()
+        // msgResp.refetch()
         // if (msgResp.isUninitialized) {
         //     msgReq(props.group._id)
         // }
-    }, [ props])
+    }, [props])
+
+    useEffect(()=>{
+        console.log('sendMessageResp', JSON.stringify(sendMessageResp))
+        if(sendMessageResp.isSuccess){
+            console.log('sendMessageResp.data', sendMessageResp.data)
+        }
+    },[sendMessageResp])
 
     const logMessages = (messages: IMessage[]) => {
         let temp: String[] = []
@@ -106,7 +115,7 @@ const ChatPage = (props: ChatPageProps) => {
                 scrollRef.current.scrollToEnd({ animated: true })
             }} ref={scrollRef as any} bounces={true} style={{ flexGrow: 1, display: 'flex', margin: 8 }}>
                 {
-                    msgResp.isSuccess &&
+                    roomProvider.isSuccess &&
                     Object.values(messageViewList).map((item: MessageView, index: number) => {
                         return <ChatMessageItem key={item.messages[0]._id} messages={item.messages} userId={item.from} />
                     })

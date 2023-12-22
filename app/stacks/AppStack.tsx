@@ -12,6 +12,8 @@ import PressableComponent from '../components/PressableComponent';
 import { CommonActions } from '@react-navigation/native';
 import { NavigationActions } from 'react-navigation';
 import { HomeRoutes } from './HomeStack';
+import Notification from '../screens/Notification';
+import { SocketProvider } from '../context/SocketContext';
 
 
 
@@ -23,6 +25,7 @@ export const DrawerRoutes = {
 export const RootBottomRoutes = {
     Home: 'Home',
     Search: 'Search',
+    Notifications: 'Notifications',
     Chat: 'Chat',
     Profile: 'Profile'
 }
@@ -43,13 +46,18 @@ export const RoutesConfig: any = {
         activeIcon: 'chat',
         inActiveIcon: 'chat-outline'
     },
+    Notifications: {
+        name: 'Notifications',
+        activeIcon: 'bell',
+        inActiveIcon: 'bell-outline'
+    },
     Profile: {
         name: 'Profile',
         activeIcon: 'account',
         inActiveIcon: 'account-outline'
     }
 }
-const tabBar = (props: BottomTabBarProps,appStackProps) => {
+const tabBar = (props: BottomTabBarProps, appStackProps) => {
     return (
         <View style={{ display: 'flex', flexDirection: 'row', width: '100%', backgroundColor: 'white', height: 60 }}>
             {
@@ -96,7 +104,7 @@ const tabBar = (props: BottomTabBarProps,appStackProps) => {
                             rippleColor='dark' foreground={true} key={route as string}
                             onClick={onPress}
                             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexGrow: 1, flexDirection: 'column' }}>
-                            <Icon style={[{ marginBottom: 4 }, iconStyle]} size={24} name={RoutesConfig[route as string].activeIcon} />
+                            <Icon style={[{ marginBottom: 4 }, iconStyle]} size={24} name={isActive ? RoutesConfig[route as string].activeIcon : RoutesConfig[route as string].inActiveIcon} />
                             {
                                 isActive &&
                                 <Text style={[{ fontSize: 10, color: Colors.pallette3.primary, fontWeight: 'bold' }, fonts.nunitoRegular]}>{route}</Text>
@@ -120,18 +128,19 @@ const AppStack = (appStackProps) => {
     }, [])
 
     return (
-        <GestureHandlerRootView>
-            <View style={{ height: '100%', width: '100%' }}>
-                <Tab.Navigator
-                    sceneContainerStyle={{ height: '100%', width: '100%' }}
-                    screenOptions={{ headerShown: false }} initialRouteName={RootBottomRoutes.Home} tabBar={(props: BottomTabBarProps) => { return tabBar(props, appStackProps) }}>
-                    <Tab.Screen name={RootBottomRoutes.Home} component={DashboardScreen2} />
-                    <Tab.Screen name={RootBottomRoutes.Search} component={SearchOrganization} />
-                    <Tab.Screen name={RootBottomRoutes.Chat} component={Chat} />
-                    <Tab.Screen name={RootBottomRoutes.Profile} component={Profile} />
-                </Tab.Navigator>
-            </View>
-        </GestureHandlerRootView>
+            <GestureHandlerRootView>
+                <View style={{ height: '100%', width: '100%' }}>
+                    <Tab.Navigator
+                        sceneContainerStyle={{ height: '100%', width: '100%' }}
+                        screenOptions={{ headerShown: false }} initialRouteName={RootBottomRoutes.Home} tabBar={(props: BottomTabBarProps) => { return tabBar(props, appStackProps) }}>
+                        <Tab.Screen name={RootBottomRoutes.Home} component={DashboardScreen2} />
+                        <Tab.Screen name={RootBottomRoutes.Search} component={SearchOrganization} />
+                        {/* <Tab.Screen name={RootBottomRoutes.Chat} component={Chat} /> */}
+                        <Tab.Screen name={RootBottomRoutes.Notifications} component={Notification} />
+                        <Tab.Screen name={RootBottomRoutes.Profile} component={Profile} />
+                    </Tab.Navigator>
+                </View>
+            </GestureHandlerRootView>
     )
     // return (
     //     <Drawer.Navigator initialRouteName={'Home'} drawerContent={DrawerComponent} screenOptions={{ headerShown: false }}>

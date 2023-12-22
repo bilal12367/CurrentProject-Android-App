@@ -1,0 +1,34 @@
+let appStateListener: NativeEventSubscription;
+    const appState = useRef(AppState.currentState);
+
+    const _handleAppStateChange = (nextAppState: AppStateStatus) => {
+        if (
+            appState.current.match(/inactive|background/) &&
+            nextAppState === "active"
+        ) {
+            console.log("App has come to the foreground!");
+            socket.emit("join_room", { roomId: roomId })
+            setMessageList([]);
+            reqGetChat(roomId);
+            socket.on("message", (message: IMessage) => {
+                updateMessageList(message);
+            })
+            //clearInterval when your app has come back to the foreground
+
+        } else {
+            //app goes to background
+            console.log('app goes to background')
+            socket.off("message")
+            socket.emit("leave_room", { roomId: roomId })
+            //tell the server that your app is still online when your app detect that it goes to background
+            appState.current = nextAppState;
+        }
+    }
+
+     useEffect(() => {
+        appStateListener = AppState.addEventListener("change", _handleAppStateChange);
+
+        return () => {
+            appStateListener.remove();
+        };
+    }, [])

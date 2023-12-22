@@ -29,7 +29,6 @@ const OrganizationDetails = (props: any) => {
             reqOrg(OrgId);
         }
         if (respOrg.isSuccess) {
-            console.log(respOrg.data.isUserJoined) //To Test
         }
     }, [respOrg])
 

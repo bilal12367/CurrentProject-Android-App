@@ -206,8 +206,18 @@ export const apiOne = createApi({
             query: (payload) => {
                 return '/api/v1/getRequestDetails?requestId='+payload
             }
+        }),
+        getAllRequests: builder.query({
+            query: () => {
+                return '/api/v1/getAllRequests'
+            }
+        }),
+        getRequestChat: builder.query({
+            query: (payload) => {
+                return '/api/v1/getRequestChat?requestId='+payload
+            }
         })
     }),
 })
 
-export const { useLazyGetRequestDetailsQuery, useAddRequestToJoinOrgMutation, useLazyGetAllOrgsQuery, useGetAllOrgsQuery, useGetProfileImageQuery, useSendMessageMutation, useGetMessagesQuery, useLazyGetMessagesQuery, useLazyGetOrgDetailsQuery, useGetOrgDetailsQuery, useGetImageQuery, useGetOrgListQuery, useUploadFile2Mutation, useCreateOrgMutation, useGetMyDetailsMutation, useGetProfilePicMutation, useGetAllUsersMutation, useTestMutation, useRegisterMutation, useLoginMutation, useUploadFileMutation } = apiOne
+export const { useLazyGetRequestChatQuery, useLazyGetAllRequestsQuery, useLazyGetRequestDetailsQuery, useAddRequestToJoinOrgMutation, useLazyGetAllOrgsQuery, useGetAllOrgsQuery, useGetProfileImageQuery, useSendMessageMutation, useGetMessagesQuery, useLazyGetMessagesQuery, useLazyGetOrgDetailsQuery, useGetOrgDetailsQuery, useGetImageQuery, useGetOrgListQuery, useUploadFile2Mutation, useCreateOrgMutation, useGetMyDetailsMutation, useGetProfilePicMutation, useGetAllUsersMutation, useTestMutation, useRegisterMutation, useLoginMutation, useUploadFileMutation } = apiOne

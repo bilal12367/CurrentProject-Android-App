@@ -12,7 +12,7 @@ const ProfileAvatar2 = ({ userId = "" }: ProfileAvatar2Props) => {
 
     useEffect(() => {
         if (imgResp.isSuccess) {
-            console.log("Unique123 : ", imgResp.data.userName)
+            // console.log("Unique123 : ", imgResp.data.userName)
         }
     }, [imgResp])
 

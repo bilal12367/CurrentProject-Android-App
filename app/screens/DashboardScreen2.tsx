@@ -15,6 +15,8 @@ import { HomeRoutes } from '../stacks/HomeStack'
 import { DrawerRoutes } from '../stacks/AppStack'
 import { Icon } from '@rneui/base'
 import { ChatRoutes } from './Chat'
+import { useSocket } from '../context/SocketContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const DashboardScreen2 = ({ navigation }) => {
     const win = Dimensions.get('window')
@@ -40,6 +42,7 @@ const DashboardScreen2 = ({ navigation }) => {
     useFocusEffect(
         React.useCallback(() => {
             orgList.refetch();
+            
         }, [])
     )
 
@@ -90,7 +93,7 @@ const DashboardScreen2 = ({ navigation }) => {
                                     <Pressable
                                         key={org._id}
                                         android_ripple={{ foreground: true, color: 'rgba(0,0,0,0.2)' }}
-                                        onPress={() => { navigation.navigate(DrawerRoutes.Chat, { screen: ChatRoutes.ChatHome.name, params: { orgId: org._id } }) }}
+                                        onPress={() => { navigation.navigate(HomeRoutes.Chat, { params: { orgId: org._id } }) }}
                                         style={{ borderRadius: 8, overflow: 'hidden', elevation: 8, marginVertical: 10, marginLeft: index == 0 ? 20 : 14, marginRight: index == orgList.data.orgs.length - 1 ? 10 : 0 }}>
                                         <View style={{ height: 60, width: 60 }}>
                                             <ImageItem fileId={org.logo} />

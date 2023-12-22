@@ -20,13 +20,13 @@ class DiscordLayoutAnimation {
   public holderX = useSharedValue(0)
   public chatX = useSharedValue(0)
   public detailsX = useSharedValue(0)
-  public end = (this.deviceWidth * 8.5) / 10
+  public end = (this.deviceWidth * 0.002)
 
   constructor() {
     this.holderX = useSharedValue(0)
     this.chatX = useSharedValue(0)
     this.detailsX = useSharedValue(0)
-    this.end = (this.deviceWidth * 8.5) / 10
+    this.end = (this.deviceWidth * 0.002)
   }
 
   public openDrawer = () => {
@@ -153,7 +153,7 @@ class DiscordLayoutAnimation {
 
 const DiscordLayoutScreen = (navigation) => {
   // const discordAnim = new DiscordLayoutAnimation()
-  let orgId : string;
+  let orgId: string;
   if (navigation.route.params?.orgId) {
     orgId = navigation.route.params?.orgId
   }
@@ -164,7 +164,7 @@ const DiscordLayoutScreen = (navigation) => {
   const chatX = useSharedValue(0)
   const detailsX = useSharedValue(0)
   const end = (deviceWidth * 8.5) / 10
-  const headerHeight = Dimensions.get('screen').height * 2 / 10
+  const headerHeight = Dimensions.get('screen').height * 0.2
 
   const [selectedOrg, setSelectedOrg] = useState<GetOrgResp | undefined>(undefined)
   const [selectedGroup, setSelectedGroup] = useState<Group | undefined>()
@@ -184,7 +184,7 @@ const DiscordLayoutScreen = (navigation) => {
     if (orgResp.isUninitialized && (orgId != "" && orgId != undefined)) {
       orgReq(orgId)
     }
-    if(orgId == undefined && orgsList.length != 0 && orgResp.isUninitialized) {
+    if (orgId == undefined && orgsList.length != 0 && orgResp.isUninitialized) {
       orgReq(orgsList[0])
     }
   }, [orgResp])

@@ -43,26 +43,8 @@ const LoginScreen = ({ navigation }: WelcomeScreenProp) => {
     useEffect(() => {
         if (loginResp.isSuccess) {
             dispatch(actions.slice1.setUserLogState(LoadingState.true))
-        } else if (loginResp.isError) {
-            const error: ErrorType = loginResp.error.data as any
-            if (error.name == GeneralErrorTypes.ParametersMissing.name) {
-                const formErrorState = formErrors
-                if (formValue.email == '') {
-                    formErrorState.email = 'Please Fill Email'
-                } else {
-                    formErrorState.email = ''
-                }
-                if (formValue.password == '') {
-                    formErrorState.password = 'Please Fill Password'
-                } else {
-                    formErrorState.password = ''
-                }
-                setFormErrors(formErrorState)
-            } else if (error.name == AuthErrorTypes.UserNotExist.name) {
-                setFormErrors({ ...formErrors, email: error.error })
-            } else if (error.name == AuthErrorTypes.IncorrectPassword.name) {
-                setFormErrors({ ...formErrors, password: error.error })
-            }
+        } else {
+            setFormErrors({...formErrors, password: "Invalid Email or Password"})
         }
     }, [loginResp])
 

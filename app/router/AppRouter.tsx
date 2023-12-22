@@ -17,6 +17,7 @@ import WelcomeScreen from '../screens/WelcomeScreen'
 import { ActivityIndicator, Text } from 'react-native-paper'
 import StatusBarComponent from '../components/StatusBarComponent'
 import HomeStack from '../stacks/HomeStack'
+import { SocketProvider } from '../context/SocketContext'
 
 const Loader = () => {
     return <View style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
@@ -72,6 +73,7 @@ const AppRouter = () => {
                 {/* <SwitchNavigator /> */}
                 {
                     isLoggedIn == LoadingState.true ?
+                        
                         <Stack.Screen name={AppRoutes.AppStack} component={HomeStack} /> :
                         <Stack.Screen name={AppRoutes.AuthStack} component={AuthStack} />
                 }
